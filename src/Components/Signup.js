@@ -8,8 +8,6 @@ function Signup() {
 
     const [flag, setFlag] = useState(false);
 
-    const [arr, setArr] = useState([]);
-
     const [login, setLogin] = useState(true);
 
 
@@ -17,11 +15,13 @@ function Signup() {
     const initialValues = {
         email: "",
         password: "",
+        name: "",
     };
     const onSubmit = (values) => {
     };
 
     const validationSchema = yup.object({
+        name: yup.string().required("Required!!"),
         email: yup.string().email("Invalid email format").required("Required!!"),
         password: yup
             .string()
@@ -29,7 +29,8 @@ function Signup() {
             .matches(
                 /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
                 "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-            )
+            ),
+
     });
 
     //Using useFormik hook for form validation
@@ -41,11 +42,12 @@ function Signup() {
 
     function handleFormSubmit(e) {
         formik.handleSubmit(e);
-        if (!formik.values.email || !formik.values.password) {
+        if (!formik.values.email || !formik.values.password || !formik.values.name) {
             setFlag(true);
         } else {
             setFlag(false);
             let ob = {
+                name: formik.values.name,
                 email: formik.values.email,
                 password: formik.values.password,
             }
@@ -59,8 +61,7 @@ function Signup() {
                 if (
                     oldArr.some(
                         (user) =>
-                            user.email === formik.values.email &&
-                            user.password === formik.values.password
+                            user.email === formik.values.email
                     )
                 ) {
                     setIsAlreadyExist(!isAlreadyExist);
@@ -69,6 +70,8 @@ function Signup() {
                     oldArr.push(ob)
                     localStorage.setItem("formdata", JSON.stringify(oldArr))
                     console.log(oldArr, 'hhg')
+                    navigate("/login")
+
                 }
             }
         }
@@ -91,6 +94,22 @@ function Signup() {
                 </div>
                 <form onSubmit={handleFormSubmit} >
                     <div className="form-control bg-muted">
+                        <label htmlFor="name" className="form-label fw-bold opacity-75">Name</label>
+                        <input
+                            type="string"
+                            id="name"
+                            name="name"
+                            className="form-control bg-light mb-2"
+                            placeholder="Enter Your Full Name"
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.name}
+                        ></input>
+                        <div className="error text-danger mb-2">
+                            {formik.touched.name && formik.errors.name ? (
+                                <div>{formik.errors.name}</div>
+                            ) : null}
+                        </div>
                         <label htmlFor="email" className="form-label fw-bold opacity-75">Email</label>
                         <input
                             type="email"
@@ -130,7 +149,6 @@ function Signup() {
                             </div>
                         </div>
                         {isAlreadyExist ? <div className="text-danger text-center"> !!!User Already Exist with this email id </div> : null}
-
                     </div>
                 </form>
             </div>
