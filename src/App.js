@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Signup from "./Components/Signup";
 import Login from "./Components/Login";
@@ -21,11 +20,7 @@ function App() {
           element={<QuestionUploadForm />}
         ></Route>
         <Route exact path="/home/showQuizzes" element={<ShowQuizzes />}></Route>
-        <Route
-          exact
-          path="/home/showQuizzes/takeQuiz"
-          element={<TakeQuiz />}
-        ></Route>
+        <Route path="/home/showQuizzes/takeQuiz" element={<TakeQuiz />}></Route>
       </Routes>
     </BrowserRouter>
   );

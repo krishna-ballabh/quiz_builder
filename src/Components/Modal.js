@@ -2,7 +2,7 @@ import React from "react";
 
 const Modal = ({ onClose, results, data }) => {
   return (
-    <div className="modal">
+    <div className="modal" tabIndex={"-1"} id="staticBackdrop">
       <p>Hello</p>
       <div className="modal-dialog" onClick={onClose}></div>
       <div className="modal-content">

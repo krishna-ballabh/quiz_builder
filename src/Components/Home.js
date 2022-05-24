@@ -8,6 +8,7 @@ function Home() {
   const [isLogin, setIsLogin] = useState(true);
   const logout = () => {
     sessionStorage.removeItem("userInfo");
+    navigate("/login");
     setIsLogin(false);
   };
   return (

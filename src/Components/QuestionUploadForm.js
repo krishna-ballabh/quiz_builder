@@ -41,10 +41,9 @@ const QuestionUploadForm = () => {
       location.state.user + `${question.title}`,
       JSON.stringify(addQuestionDetails)
     );
+    alert("your Quiz is Created You can see it in Show Quizzes Section");
     setAddQuestionDetails([]);
   };
-
-  console.log(JSON.stringify(addQuestionDetails));
   return (
     <>
       <div className="container-fluid">
