@@ -3,15 +3,11 @@ import Start from "./Start";
 import { useLocation } from "react-router-dom";
 import Question from "./Question";
 import End from "./End";
-import Modal from "./Modal";
 import { useState, useEffect } from "react";
+
+let interval;
+
 const TakeQuiz = () => {
-  let interval;
-
-  const location = useLocation();
-
-  const quizData = location.state.arr;
-
   const [step, setStep] = useState(1);
 
   const [activeQuestion, setActiveQuestion] = useState(0);
@@ -22,11 +18,26 @@ const TakeQuiz = () => {
 
   const [time, setTime] = useState(0);
 
+  const [quizData, setQuizData] = useState([]);
+
   useEffect(() => {
     if (step === 3) {
       clearInterval(interval);
     }
   }, [step]);
+
+  const location = useLocation();
+
+  const quizKey = location.pathname.substring(27);
+
+  useEffect(() => {
+    const keyArr = Object.keys(localStorage);
+    keyArr.some((user) => {
+      if (user.includes(quizKey)) {
+        setQuizData(JSON.parse(localStorage.getItem(user)));
+      }
+    });
+  }, []);
 
   const quizStartHandler = () => {
     setStep(2);
@@ -59,21 +70,7 @@ const TakeQuiz = () => {
         />
       )}
       {step === 3 && (
-        <End
-          results={answers}
-          data={quizData}
-          onReset={resetClickHandler}
-          onAnswersCheck={() => setShowModal(true)}
-          time={time}
-        />
-      )}
-
-      {showModal && (
-        <Modal
-          onClose={() => setShowModal(false)}
-          results={answers}
-          data={quizData}
-        />
+        <End results={answers} data={quizData} onReset={resetClickHandler} />
       )}
     </div>
   );

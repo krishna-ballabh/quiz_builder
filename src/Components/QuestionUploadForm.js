@@ -11,6 +11,7 @@ const QuestionUploadForm = () => {
     option3: "",
     option4: "",
     answer: "",
+    randomKey: "",
   });
 
   const [isAdded, setIsAdded] = useState(false);
@@ -37,13 +38,16 @@ const QuestionUploadForm = () => {
   };
 
   const addTOStorage = () => {
+    const random = Math.random().toString(36).substring(5);
+    addQuestionDetails[0].randomKey = random;
     localStorage.setItem(
-      location.state.user + `${question.title}`,
+      random + location.state.user + `${question.title}`,
       JSON.stringify(addQuestionDetails)
     );
     alert("your Quiz is Created You can see it in Show Quizzes Section");
     setAddQuestionDetails([]);
   };
+
   return (
     <>
       <div className="container-fluid">

@@ -1,32 +1,39 @@
+/* This is login Page */
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Signup from "./Signup";
-import Home from "./Home";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
   const initialValues = {
     email: "",
     password: "",
   };
-  const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+
   const [isCorrect, setIsCorrect] = useState(true);
+
   const validationSchema = yup.object({
     email: yup.string().email("Invalid email format").required("Required!!"),
     password: yup.string().required("Required!!"),
   });
+
   const onSubmit = (values) => {};
-  //Using useFormik hook for form validation
+
+  /* Using useFormik hook for form validation */
+
   const formik = useFormik({
     initialValues,
     onSubmit,
     validationSchema,
   });
+
+  /* handle Submit function */
+
   function handleFormSubmit(e) {
     formik.handleSubmit(e);
     var arr = JSON.parse(localStorage.getItem("formdata"));
+
     if (arr === null) {
       setIsCorrect(!isCorrect);
     } else if (
@@ -39,7 +46,9 @@ function Login() {
       let ob = { email: formik.values.email, password: formik.values.password };
       sessionStorage.setItem("userInfo", JSON.stringify(ob));
       setLoggedIn(true);
-      navigate("/home", { state: { email: formik.values.email } });
+      navigate("/home", {
+        state: { email: formik.values.email },
+      });
     } else {
       setIsCorrect(!isCorrect);
     }

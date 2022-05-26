@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const End = ({ results, data, onReset, onAnswersCheck, time }) => {
+const End = ({ results, data, onReset }) => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
 
   useEffect(() => {
@@ -24,14 +24,6 @@ const End = ({ results, data, onReset, onAnswersCheck, time }) => {
           <p>
             <strong>{Math.floor((correctAnswers / data.length) * 100)}%</strong>
           </p>
-          <button
-            className="btn btn-info mr-2"
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-            onClick={onAnswersCheck}
-          >
-            Check your answers
-          </button>
           <button className="btn btn-success mt-4" onClick={onReset}>
             Try again
           </button>

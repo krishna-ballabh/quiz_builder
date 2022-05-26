@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import QuestionUploadForm from "./Components/QuestionUploadForm";
 import ShowQuizzes from "./Components/ShowQuizzes";
 import TakeQuiz from "./Components/TakeQuiz";
+import { useState } from "react";
 function App() {
   return (
     <BrowserRouter>
@@ -20,7 +21,10 @@ function App() {
           element={<QuestionUploadForm />}
         ></Route>
         <Route exact path="/home/showQuizzes" element={<ShowQuizzes />}></Route>
-        <Route path="/home/showQuizzes/takeQuiz" element={<TakeQuiz />}></Route>
+        <Route
+          path={`/home/showQuizzes/takeQuiz/:id`}
+          element={<TakeQuiz />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
